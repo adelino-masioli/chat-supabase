@@ -1,38 +1,8 @@
+
 import { Box, Button, Image, Text, TextField } from "@skynexui/components";
 import { useRouter } from "next/router";
 import React from "react";
 import appConfig from "../config.json";
-
-function GlobalStyle() {
-  return (
-    <style global jsx>{`
-      * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-        list-style: none;
-      }
-      body {
-        font-family: "Open Sans", sans-serif;
-      }
-      /* App fit Height */
-      html,
-      body,
-      #__next {
-        min-height: 100vh;
-        display: flex;
-        flex: 1;
-      }
-      #__next {
-        flex: 1;
-      }
-      #__next > * {
-        flex: 1;
-      }
-      /* ./App fit Height */
-    `}</style>
-  );
-}
 
 
 function Titulo(props) {
@@ -52,12 +22,14 @@ function Titulo(props) {
 }
 
 export default function PaginaInicial() {
-  const [username, setUsername] = React.useState("ade");
+  // const username = 'omariosouto';
+  const [username, setUsername] = React.useState("adelino-masioli");
   const roteamento = useRouter();
+
+  console.log(process.env.SUPABASE_ANON_KEY);
 
   return (
     <>
-      <GlobalStyle />
       <Box
         styleSheet={{
           display: "flex",
@@ -95,9 +67,7 @@ export default function PaginaInicial() {
             onSubmit={function (infosDoEvento) {
               infosDoEvento.preventDefault();
               console.log("Alguém submeteu o form");
-              // roteamento.push('/chat?username=' + username);
               roteamento.push(`/chat?username=${username}`);
-              // window.location.href = '/chat';
             }}
             styleSheet={{
               display: "flex",
