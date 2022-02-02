@@ -1,13 +1,10 @@
 import { Box, Button, Image, Text, TextField } from "@skynexui/components";
-import { createClient } from "@supabase/supabase-js";
 import { useRouter } from "next/router";
 import React from "react";
 import appConfig from "../config.json";
 import { ButtonSendSticker } from "../src/components/ButtonSendSticker";
+import { supabase as supabaseClient } from "../utils/supabaseClient";
 
-const SUPABASE_ANON_KEY = process.env.SUPABASE_ANON_KEY;
-const SUPABASE_URL = process.env.SUPABASE_URL;
-const supabaseClient = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
 function escutaMensagensEmTempoReal(adicionaMensagem) {
   return supabaseClient
