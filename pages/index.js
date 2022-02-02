@@ -3,7 +3,6 @@ import { Box, Button, Image, Text, TextField } from "@skynexui/components";
 import { useRouter } from "next/router";
 import React from "react";
 import appConfig from "../config.json";
-import { supabase } from "../utils/supabaseClient";
 
 
 function Titulo(props) {
@@ -25,8 +24,6 @@ function Titulo(props) {
 export default function PaginaInicial() {
   const [username, setUsername] = React.useState("adelino-masioli");
   const roteamento = useRouter();
-
-  console.log(supabase);
 
   return (
     <>
