@@ -3,6 +3,7 @@ import { useRouter } from "next/router";
 import React from "react";
 import appConfig from "../config.json";
 import { ButtonSendSticker } from "../src/components/ButtonSendSticker";
+import Container from "../src/components/Container";
 import { supabase as supabaseClient } from "../utils/supabaseClient";
 
 
@@ -22,6 +23,10 @@ export default function ChatPage() {
   const [listaDeMensagens, setListaDeMensagens] = React.useState([]);
 
   React.useEffect(() => {
+    return getMessages();
+  }, []);
+
+  function getMessages(){
     supabaseClient
       .from("messages")
       .select("*")
@@ -40,7 +45,7 @@ export default function ChatPage() {
     return () => {
       subscription.unsubscribe();
     };
-  }, []);
+  }
 
   function handleNovaMensagem(novaMensagem) {
     const mensagem = {
@@ -52,26 +57,14 @@ export default function ChatPage() {
       .from("messages")
       .insert([mensagem])
       .then(({ data }) => {
-        console.log("Criando mensagem: ", data);
+       return getMessages();
       });
 
     setMensagem("");
   }
 
   return (
-    <Box
-      styleSheet={{
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        backgroundColor: appConfig.theme.colors.primary[500],
-        backgroundImage: `url(https://virtualbackgrounds.site/wp-content/uploads/2020/08/the-matrix-digital-rain.jpg)`,
-        backgroundRepeat: "no-repeat",
-        backgroundSize: "cover",
-        backgroundBlendMode: "multiply",
-        color: appConfig.theme.colors.neutrals["000"],
-      }}
-    >
+    <Container>
       <Box
         styleSheet={{
           display: "flex",
@@ -81,8 +74,8 @@ export default function ChatPage() {
           borderRadius: "5px",
           backgroundColor: appConfig.theme.colors.neutrals[700],
           height: "100%",
-          maxWidth: "95%",
-          maxHeight: "95vh",
+          maxWidth: "70%",
+          maxHeight: "70vh",
           padding: "32px",
         }}
       >
@@ -141,7 +134,7 @@ export default function ChatPage() {
           </Box>
         </Box>
       </Box>
-    </Box>
+    </Container>
   );
 }
 
@@ -155,6 +148,7 @@ function Header() {
           display: "flex",
           alignItems: "center",
           justifyContent: "space-between",
+          color: appConfig.theme.colors.neutrals["000"],
         }}
       >
         <Text variant="heading5">Chat</Text>
@@ -174,7 +168,7 @@ function MessageList(props) {
     <Box
       tag="ul"
       styleSheet={{
-        overflow: "scroll",
+        overflowY: "scroll",
         display: "flex",
         flexDirection: "column-reverse",
         flex: 1,
