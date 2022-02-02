@@ -1,3 +1,4 @@
+import Head from "next/head";
 function GlobalStyle() {
   return (
     <style global jsx>{`
@@ -33,6 +34,9 @@ export default function CustomApp({ Component, pageProps }) {
   return (
     <>
       <GlobalStyle />
+      <Head>
+        <link rel="shortcut icon" href="/favicon.png" />
+      </Head>
       <Component {...pageProps} />
     </>
   );

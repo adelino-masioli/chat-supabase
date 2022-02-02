@@ -37,7 +37,6 @@ export default function ChatPage() {
 
     const subscription = escutaMensagensEmTempoReal((novaMensagem) => {
       setListaDeMensagens((valorAtualDaLista) => {
-        console.log("valorAtualDaLista:", valorAtualDaLista);
         return [novaMensagem, ...valorAtualDaLista];
       });
     });
@@ -55,9 +54,11 @@ export default function ChatPage() {
 
     supabaseClient
       .from("messages")
-      .insert([mensagem])
+      .insert([
+        mensagem,
+      ])
       .then(({ data }) => {
-       return getMessages();
+        console.log("Creating message: ", data);
       });
 
     setMensagem("");
@@ -217,18 +218,11 @@ function MessageList(props) {
                 {new Date().toLocaleDateString()}
               </Text>
             </Box>
-            {/* [Declarativo] */}
-            {/* Condicional: {mensagem.texto.startsWith(':sticker:').toString()} */}
             {mensagem.texto.startsWith(":sticker:") ? (
               <Image src={mensagem.texto.replace(":sticker:", "")} />
             ) : (
               mensagem.texto
             )}
-            {/* if mensagem de texto possui stickers:
-                           mostra a imagem
-                        else
-                           mensagem.texto */}
-            {/* {mensagem.texto} */}
           </Text>
         );
       })}
